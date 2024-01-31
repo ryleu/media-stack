@@ -13,9 +13,9 @@ WIREGUARD_ADDRESSES="10.69.89.210/32"
 SERVER_CITIES="Atlanta GA"
 ```
 
-## timezone
+## common
 
-Here is an example of my `timezone.env`:
+Here is an example of my `common.env`:
 
 ```sh
 TZ="America/New_York"

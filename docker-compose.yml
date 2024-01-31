@@ -12,13 +12,13 @@ services:
       - 6881:6881
       - 6881:6881/udp
       # radarr
-      #- 7878:7878
+      - 7878:7878
       # sonarr
-      #- 8989:8989
+      - 8989:8989
       # prowlarr
-      #- 9696:9696
+      - 9696:9696
       # flaresolverr
-      #- 8191:8191
+      - 8191:8191
     restart: always
 
   qbittorrent:
@@ -51,7 +51,7 @@ services:
       - /opt/media/radarr:/config
       - /mnt/game0/media/movies:/downloads
       - /mnt/game0/media/downloads:/new
-    network_mode: host # service:gluetun
+    network_mode: service:gluetun
     restart: always
 
   sonarr:
@@ -62,7 +62,7 @@ services:
       - /opt/media/sonarr:/config
       - /mnt/game0/media/shows:/downloads
       - /mnt/game0/media/downloads:/new
-    network_mode: host # service:gluetun
+    network_mode: service:gluetun
     restart: always
 
   # readarr:
@@ -81,7 +81,7 @@ services:
       - path: ./common.env
     volumes:
       - /opt/media/prowlarr:/config
-    network_mode: host # service:gluetun
+    network_mode: service:gluetun
     restart: unless-stopped
 
   flaresolverr:
@@ -90,7 +90,7 @@ services:
       - path: ./common.env
     environment:
       LOG_LEVEL: info
-    network_mode: host # service:gluetun
+    network_mode: service:gluetun
     restart: always
 
   nginx:
@@ -98,5 +98,6 @@ services:
     container_name: nginx
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./www:/var/www
     network_mode: host
     restart: unless-stopped
