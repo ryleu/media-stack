@@ -1,0 +1,79 @@
+/*
+This file is part of media-stack.
+
+media-stack is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
+License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later
+version.
+
+media-stack is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
+warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+details.
+
+You should have received a copy of the GNU General Public License along with media-stack. If not, see
+<https://www.gnu.org/licenses/>.
+*/
+
+:root {
+    color-scheme: dark;
+    background-color: #181a1b;
+    color: #ccc;
+    font: 1em "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+a {
+    color: white;
+}
+
+a:visited {
+    color: white;
+}
+
+.main-area {
+    display: flex;
+    flex-direction: row;
+}
+
+.flexbox {
+    flex-grow: 1;
+}
+
+.button-holder {
+    height: min(60vh, 500px);
+    width: min(90vw, 600px);
+}
+
+#title {
+    text-align: center;
+    font-size: min(15vw, 5em);
+}
+
+.my-buttons {
+    cursor: pointer;
+    height: calc(50% - 20px);
+    width: 100%;
+    margin-bottom: 20px;
+    background-color: #484e51;
+    border-color: #35393b;
+    border-radius: 10px;
+    border-width: 5px;
+    border-style: solid;
+    font-size: 4em;
+}
+
+.my-buttons:active {
+    border-style: ridge;
+    border-right-style: solid;
+    border-bottom-style: solid;
+}
+
+svg,
+img {
+    position: absolute;
+    top: calc(-1em / 2);
+    left: -40px;
+    width: 32px;
+    height: 32px;
+    background-color: white;
+    border: 1px solid white;
+    border-radius: 100%;
+}
