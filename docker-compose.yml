@@ -5,26 +5,30 @@ services:
     cap_add:
       - NET_ADMIN
     env_file:
-      - path: ./gluetun.env
+      - path: ./conf/gluetun.env
+    environment:
+      - OPENVPN_CUSTOM_CONFIG="/gluetun/custom.conf"
+    volumes:
+      - ./conf/vpn.ovpn:/gluetun/custom.conf:ro
     ports:
       # qbittorrent
       - 5080:5080
-      - 6881:6881
-      - 6881:6881/udp
+      #- 6881:6881
+      #- 6881:6881/udp
       # radarr
-      - 7878:7878
+      #- 7878:7878
       # sonarr
-      - 8989:8989
+      #- 8989:8989
       # prowlarr
-      - 9696:9696
+      #- 9696:9696
       # flaresolverr
-      - 8191:8191
+      #- 8191:8191
     restart: always
 
   qbittorrent:
     image: lscr.io/linuxserver/qbittorrent:latest
     env_file:
-      - path: ./common.env
+      - path: ./conf/common.env
     environment:
       - WEBUI_PORT=5080
     volumes:
@@ -46,28 +50,28 @@ services:
   radarr:
     image: lscr.io/linuxserver/radarr:latest
     env_file:
-      - path: ./common.env
+      - path: ./conf/common.env
     volumes:
       - /opt/media/radarr:/config
       - /mnt/game0/media/movies:/downloads
       - /mnt/game0/media/downloads:/new
-    network_mode: service:gluetun
+    network_mode: host # service:gluetun
     restart: always
 
   sonarr:
     image: lscr.io/linuxserver/sonarr:latest
     env_file:
-      - path: ./common.env
+      - path: ./conf/common.env
     volumes:
       - /opt/media/sonarr:/config
       - /mnt/game0/media/shows:/downloads
       - /mnt/game0/media/downloads:/new
-    network_mode: service:gluetun
+    network_mode: host # service:gluetun
     restart: always
 
   # readarr:
   #   image: lscr.io/linuxserver/readarr:develop
-  #   env_file: ./common.env
+  #   env_file: ./conf/common.env
   #   volumes:
   #     - /opt/media/readarr:/config
   #     - /mnt/game0/media/books:/downloads
@@ -78,26 +82,25 @@ services:
   prowlarr:
     image: linuxserver/prowlarr:latest
     env_file:
-      - path: ./common.env
+      - path: ./conf/common.env
     volumes:
       - /opt/media/prowlarr:/config
-    network_mode: service:gluetun
+    network_mode: host # service:gluetun
     restart: unless-stopped
 
   flaresolverr:
     image: ghcr.io/flaresolverr/flaresolverr:latest
     env_file:
-      - path: ./common.env
+      - path: ./conf/common.env
     environment:
       LOG_LEVEL: info
-    network_mode: service:gluetun
+    network_mode: host # service:gluetun
     restart: always
 
   nginx:
     image: nginx:1.25.1-alpine
-    container_name: nginx
     volumes:
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf
-      - ./www:/var/www
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./www:/var/www:ro
     network_mode: host
     restart: unless-stopped
