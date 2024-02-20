@@ -22,7 +22,7 @@ services:
       # prowlarr
       #- 9696:9696
       # flaresolverr
-      #- 8191:8191
+      - 8191:8191
     restart: always
 
   qbittorrent:
@@ -40,10 +40,18 @@ services:
   jellyfin:
     image: jellyfin/jellyfin:latest
     user: 972:962
+    env_file:
+      - path: ./conf/common.env
     volumes:
       - /opt/media/jellyfin/config:/config
       - /opt/media/jellyfin/cache:/cache
       - /mnt/game0/media:/media
+    devices:
+      - /dev/dri/renderD128:/dev/dri/renderD128
+      - /dev/kfd:/dev/kfd
+    environment:
+      - ROC_ENABLE_PRE_VEGA=1
+      #- DOCKER_MODS=linuxserver/mods:jellyfin-amd
     network_mode: host
     restart: always
 
@@ -94,8 +102,17 @@ services:
       - path: ./conf/common.env
     environment:
       LOG_LEVEL: info
-    network_mode: host # service:gluetun
+    network_mode: service:gluetun # host
     restart: always
+
+  jellyseerr:
+    image: fallenbagel/jellyseerr:latest
+    env_file:
+      - path: ./conf/common.env
+    volumes:
+      - /opt/media/jellyseerr:/app/config
+    network_mode: host
+    restart: unless-stopped
 
   nginx:
     image: nginx:1.25.1-alpine
