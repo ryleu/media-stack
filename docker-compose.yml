@@ -77,6 +77,30 @@ services:
     network_mode: host # service:gluetun
     restart: always
 
+  calibre:
+    image: ghcr.io/linuxserver/calibre:latest
+    env_file:
+      - path: ./conf/common.env
+    volumes:
+      - /opt/media/calibre/config:/config
+      - /opt/media/calibre/plugins:/plugins
+      - /opt/media/downloads:/uploads
+      - /mnt/game0/media/books:/Calibre_Library
+    network_mode: host
+    restart: always
+
+  calibre-web:
+    image: ghcr.io/linuxserver/calibre-web:latest
+    env_file:
+      - path: ./conf/common.env
+    volumes:
+      - /opt/media/calibre-web:/config
+      - /mnt/game0/media/books:/books
+    network_mode: host
+    restart: always
+    depends_on:
+      - calibre
+
   # readarr:
   #   image: lscr.io/linuxserver/readarr:develop
   #   env_file: ./conf/common.env
