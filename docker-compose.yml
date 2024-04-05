@@ -11,11 +11,6 @@ services:
       - OPENVPN_CUSTOM_CONFIG="/gluetun/custom.conf"
     volumes:
       - ./conf/vpn.ovpn:/gluetun/custom.conf:ro
-    ports:
-      # qbittorrent
-      - 5080:5080
-      # flaresolverr
-      - 8191:8191
     restart: always
 
   qbittorrent:
