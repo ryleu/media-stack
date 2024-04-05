@@ -33,3 +33,17 @@ TZ="America/New_York"
 PUID=972
 PGID=962
 ```
+## Setting up individual components
+
+You'll need to work through the setup parts of Prowlarr, Radarr, Sonarr, Jellyfin, Jellyseerr, and QBitTorrent.
+
+Additionally:
+- In Jellyseerr, give it the internal Jellyfin URL `http://nginx/watch` to point to Jellyfin through Nginx.
+- In Prowlarr, set up flaresolvarr as a proxy (it has the address `http://gluetun:8191).
+- In Prowlarr, set up QBitTorrent as a download client (it has the address `http://gluetun:5080`).
+- In Prowlarr, set up Radarr and Sonarr as apps (they have the addresses `http://radarr` and `http://sonarr` respectively).
+- In QBitTorrent, configure it to use whichever port has port forwarding enabled in your VPN.
+
+## Known Issues
+
+Jellyseerr will break with an Nginx 404 page if you use the back button in your browser. This is due to [this issue](https://github.com/sct/overseerr/issues/274) upstream with Overseerr.
