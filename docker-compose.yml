@@ -130,3 +130,11 @@ services:
     ports:
       - 80:80
     restart: unless-stopped
+
+  rathole:
+    image: rapiz1/rathole
+    hostname: rathole
+    command: "--client /app/config.toml"
+    volumes:
+      - ./conf/rathole.toml:/app/config.toml
+    restart: unless-stopped
